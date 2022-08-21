@@ -75,7 +75,6 @@ public class Assets {
     public static final TextureRegion[] scroll = new TextureRegion[2];
     public static TextureRegion shortArrow;
     public static final TextureRegion[] stars = new TextureRegion[10];
-    public static final TextureRegion[][] controls = new TextureRegion[2][3];
     public static final TextureRegion[][] pieces = new TextureRegion[2][2];
     public static final TextureRegion[][] stadium = new TextureRegion[4][4];
     public static final TextureRegion[] crowd = new TextureRegion[5];
@@ -255,7 +254,6 @@ public class Assets {
         loadScroll();
         shortArrow = loadTextureRegion("images/short_arrow.png");
         loadStars();
-        loadControls();
         loadPieces();
         crowdRenderer = new CrowdRenderer(Gdx.files.internal("images/stadium/crowd.json"));
         goalTopA = new Texture("images/stadium/goal_top_a.png");
@@ -478,16 +476,6 @@ public class Assets {
         for (int i = 0; i < 10; i++) {
             stars[i] = new TextureRegion(texture, 0, 16 * i, 64, 16);
             stars[i].flip(false, true);
-        }
-    }
-
-    private static void loadControls() {
-        Texture texture = new Texture("images/controls.png");
-        for (int i = 0; i < 3; i++) {
-            controls[0][i] = new TextureRegion(texture, 36 * i, 0, 36, 36);
-            controls[0][i].flip(false, true);
-            controls[1][i] = new TextureRegion(texture, 18 * i, 36, 18, 18);
-            controls[1][i].flip(false, true);
         }
     }
 

@@ -16,6 +16,7 @@ public class Gui {
     public final TextureRegion[] lightIcons = new TextureRegion[2];
     public final TextureRegion[] pitchIcons = new TextureRegion[9];
     public final TextureRegion[] weatherIcons = new TextureRegion[10];
+    public final TextureRegion[][] controls = new TextureRegion[2][3];
 
     public void resize(int width, int height) {
         float wZoom = (float) width / WIDTH;
@@ -48,6 +49,14 @@ public class Gui {
         for (int i = 0; i < 10; i++) {
             weatherIcons[i] = new TextureRegion(region, 47 * i, 0, 46, 46);
             weatherIcons[i].flip(false, true);
+        }
+
+        region = guiAtlas.findRegion("controls");
+        for (int i = 0; i < 3; i++) {
+            controls[0][i] = new TextureRegion(region, 36 * i, 0, 36, 36);
+            controls[0][i].flip(false, true);
+            controls[1][i] = new TextureRegion(region, 18 * i, 36, 18, 18);
+            controls[1][i].flip(false, true);
         }
     }
 }

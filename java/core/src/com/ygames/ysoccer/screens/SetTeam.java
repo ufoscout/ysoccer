@@ -73,7 +73,7 @@ class SetTeam extends GLScreen {
 
         background = new Texture("images/backgrounds/menu_set_team.jpg");
 
-        font10yellow = new Font(10, 13, 17, 12,16, new RgbPair(0xFCFCFC, 0xFCFC00));
+        font10yellow = new Font(10, 13, 17, 12, 16, new RgbPair(0xFCFCFC, 0xFCFC00));
         font10yellow.load();
 
         ownTeam.loadImage();
@@ -198,7 +198,7 @@ class SetTeam extends GLScreen {
                 } else {
                     setText(player.inputDevice.port + 1);
                 }
-                textureRegion = Assets.controls[1][player.inputDevice.type.ordinal()];
+                textureRegion = gui.controls[1][player.inputDevice.type.ordinal()];
                 setVisible(true);
             } else {
                 setText("");
@@ -561,7 +561,7 @@ class SetTeam extends GLScreen {
                         setText(gettext("JOYSTICK") + " " + (shownTeam.inputDevice.port + 1));
                         break;
                 }
-                textureRegion = Assets.controls[0][shownTeam.inputDevice.type.ordinal()];
+                textureRegion = gui.controls[0][shownTeam.inputDevice.type.ordinal()];
             } else {
                 setVisible(false);
             }

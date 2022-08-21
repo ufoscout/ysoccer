@@ -4,9 +4,16 @@ size: 512, 256
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+controls
+  rotate: false
+  xy: 353, 61
+  size: 108, 54
+  orig: 108, 54
+  offset: 0, 0
+  index: -1
 light
   rotate: false
-  xy: 353, 69
+  xy: 353, 13
   size: 94, 46
   orig: 94, 46
   offset: 0, 0
