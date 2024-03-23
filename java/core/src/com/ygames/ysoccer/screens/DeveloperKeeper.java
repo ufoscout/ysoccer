@@ -1012,8 +1012,8 @@ class DeveloperKeeper extends GLScreen {
     private class InputProcessor extends InputAdapter {
 
         @Override
-        public boolean scrolled(int n) {
-            firstRow = EMath.slide(firstRow, displayedRows - getPlayerRows(), 0, -n);
+        public boolean scrolled(float x, float y) {
+            firstRow = EMath.slide(firstRow, displayedRows - getPlayerRows(), 0, -(int)y);
             refreshAllWidgets();
             return true;
         }
