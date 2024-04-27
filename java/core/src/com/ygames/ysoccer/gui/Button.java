@@ -74,7 +74,7 @@ public class Button extends Widget {
         }
 
         if (addShadow) {
-            batch.setColor(0x242424, alpha);
+            batch.setColor(0x000000, 0.6f*alpha);
             batch.begin();
             batch.draw(textureRegion, x + 4 + imageX, y + 4 + imageY, 0, 0, textureRegion.getRegionWidth(), textureRegion.getRegionHeight(), imageScaleX, imageScaleY, 0);
             batch.end();
