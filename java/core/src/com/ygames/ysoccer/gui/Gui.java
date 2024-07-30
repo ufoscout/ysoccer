@@ -17,6 +17,7 @@ public class Gui {
     public final TextureRegion[] pitchIcons = new TextureRegion[9];
     public final TextureRegion[] weatherIcons = new TextureRegion[10];
     public final TextureRegion[][] controls = new TextureRegion[2][3];
+    public final TextureRegion[] penaltyCards = new TextureRegion[3];
 
     public void resize(int width, int height) {
         float wZoom = (float) width / WIDTH;
@@ -58,5 +59,13 @@ public class Gui {
             controls[1][i] = new TextureRegion(region, 18 * i, 36, 18, 18);
             controls[1][i].flip(false, true);
         }
+
+        region = guiAtlas.findRegion("penalty_cards");
+        penaltyCards[0] = new TextureRegion(region, 0, 0, 9, 14);
+        penaltyCards[0].flip(false, true);
+        penaltyCards[1] = new TextureRegion(region, 10, 0, 9, 14);
+        penaltyCards[1].flip(false, true);
+        penaltyCards[2] = new TextureRegion(region, 20, 0, 14, 14);
+        penaltyCards[2].flip(false, true);
     }
 }

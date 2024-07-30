@@ -32,7 +32,7 @@ limitMemory=true
 useIndexes=true
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:gui/logo.png,type:Input,regionName:null},{path:gui/light.png,type:Input,regionName:null},{path:gui/pitches.png,type:Input,regionName:null},{path:gui/weather.png,type:Input,regionName:null},{path:gui/controls.png,type:Input,regionName:null}]
+inputFiles=[{path:gui/logo.png,type:Input,regionName:null},{path:gui/light.png,type:Input,regionName:null},{path:gui/pitches.png,type:Input,regionName:null},{path:gui/weather.png,type:Input,regionName:null},{path:gui/controls.png,type:Input,regionName:null},{path:gui/penalty_cards.png,type:Input,regionName:null}]
 keepInputFileExtensions=false
 
 

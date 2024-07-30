@@ -25,6 +25,13 @@ logo
   orig: 349, 113
   offset: 0, 0
   index: -1
+penalty_cards
+  rotate: false
+  xy: 474, 197
+  size: 34, 14
+  orig: 34, 14
+  offset: 0, 0
+  index: -1
 pitches
   rotate: false
   xy: 2, 117
