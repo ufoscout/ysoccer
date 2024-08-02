@@ -35,7 +35,6 @@ import static com.ygames.ysoccer.match.Player.Role.LEFT_WINGER;
 import static com.ygames.ysoccer.match.Player.Role.MIDFIELDER;
 import static com.ygames.ysoccer.match.Player.Role.RIGHT_BACK;
 import static com.ygames.ysoccer.match.Player.Role.RIGHT_WINGER;
-import static com.ygames.ysoccer.match.PlayerFsm.Id.STATE_OUTSIDE;
 import static com.ygames.ysoccer.match.PlayerFsm.Id.STATE_STAND_RUN;
 
 public class Team implements Json.Serializable {
@@ -901,5 +900,13 @@ public class Team implements Json.Serializable {
             }
         }
         return null;
+    }
+
+    public boolean hasUnavailablePlayers() {
+        for (int i = 0; i < TEAM_SIZE; i++) {
+            Player player = players.get(i);
+            if (player.suspensions > 0) return true;
+        }
+        return false;
     }
 }

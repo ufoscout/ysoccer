@@ -58,7 +58,7 @@ public abstract class Competition {
 
     public List<Team> teams;
     public ArrayList<Scorer> scorers;
-    public ArrayList<PlayerSanctions> sanctionsList;
+    public ArrayList<PlayerSanctions> sanctions;
     final private Comparator<Scorer> scorerComparator;
 
     protected Competition(Type type) {
@@ -74,7 +74,7 @@ public abstract class Competition {
         time = MatchSettings.Time.DAY;
         scorers = new ArrayList<>();
         scorerComparator = new ScorerComparator();
-        sanctionsList = new ArrayList<>();
+        sanctions = new ArrayList<>();
     }
 
     public void read(Json json, JsonValue jsonData) {
@@ -121,7 +121,7 @@ public abstract class Competition {
             while (rawPlayerSanctions != null) {
                 Team team = teams.get(rawPlayerSanctions.getInt("team"));
                 Player player = team.players.get(rawPlayerSanctions.getInt("player"));
-                sanctionsList.add(new PlayerSanctions(player, rawPlayerSanctions.getInt("yellows"), rawPlayerSanctions.getInt("suspensions")));
+                sanctions.add(new PlayerSanctions(player, rawPlayerSanctions.getInt("yellows"), rawPlayerSanctions.getInt("suspensions")));
                 rawPlayerSanctions = rawPlayerSanctions.next();
             }
         }
@@ -160,7 +160,7 @@ public abstract class Competition {
         }
         json.writeArrayEnd();
         json.writeArrayStart("sanctions");
-        for (PlayerSanctions playerSanctions : sanctionsList) {
+        for (PlayerSanctions playerSanctions : sanctions) {
             if (playerSanctions.yellows == 0 && playerSanctions.suspensions == 0) continue;
             json.writeObjectStart();
             json.writeValue("team", teams.indexOf(playerSanctions.player.team));
@@ -210,6 +210,7 @@ public abstract class Competition {
     public void restart() {
         userPrefersResult = false;
         scorers.clear();
+        sanctions.clear();
     }
 
     public static String getCategoryLabel(Category category) {
@@ -466,7 +467,7 @@ public abstract class Competition {
     private void dropSuspensions() {
         Team homeTeam = getTeam(HOME);
         Team awayTeam = getTeam(AWAY);
-        for (PlayerSanctions playerCards : sanctionsList) {
+        for (PlayerSanctions playerCards : sanctions) {
             if (playerCards.player.team == homeTeam || playerCards.player.team == awayTeam) {
                 if (playerCards.suspensions > 0) {
                     playerCards.suspensions -= 1;
@@ -483,37 +484,37 @@ public abstract class Competition {
     }
 
     private void updatePlayerSanctions(Player player, Referee.PenaltyCard penaltyCard) {
-        PlayerSanctions playerCards = searchPlayerSanctions(player);
-        if (playerCards == null) {
-            playerCards = new PlayerSanctions(player, 0, 0);
-            sanctionsList.add(playerCards);
+        PlayerSanctions playerSanctions = searchPlayerSanctions(player);
+        if (playerSanctions == null) {
+            playerSanctions = new PlayerSanctions(player, 0, 0);
+            sanctions.add(playerSanctions);
         }
 
         switch (penaltyCard) {
             case YELLOW:
-                if(oneToSuspension(playerCards.yellows)) {
-                    playerCards.suspensions += 1;
+                if(oneToSuspension(playerSanctions.yellows)) {
+                    playerSanctions.suspensions += 1;
                 }
-                playerCards.yellows += 1;
+                playerSanctions.yellows += 1;
                 break;
 
             case YELLOW_PLUS_RED:
-                if(oneToSuspension(playerCards.yellows)) {
-                    playerCards.suspensions += 1;
+                if(oneToSuspension(playerSanctions.yellows)) {
+                    playerSanctions.suspensions += 1;
                 }
-                playerCards.yellows += 1;
-                playerCards.suspensions += 1;
+                playerSanctions.yellows += 1;
+                playerSanctions.suspensions += 1;
                 break;
 
             case DOUBLE_YELLOW:
             case RED:
-                playerCards.suspensions += 1;
+                playerSanctions.suspensions += 1;
                 break;
         }
     }
 
     public PlayerSanctions searchPlayerSanctions(Player player) {
-        for (PlayerSanctions playerSanctions : sanctionsList) {
+        for (PlayerSanctions playerSanctions : sanctions) {
             if (playerSanctions.player == player) {
                 return playerSanctions;
             }

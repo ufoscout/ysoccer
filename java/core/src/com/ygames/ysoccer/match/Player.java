@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.ygames.ysoccer.competitions.Competition;
 import com.ygames.ysoccer.framework.Ai;
 import com.ygames.ysoccer.framework.Assets;
 import com.ygames.ysoccer.framework.Color2;
@@ -24,7 +25,6 @@ import static com.ygames.ysoccer.match.Const.GOAL_LINE;
 import static com.ygames.ysoccer.match.Const.TEAM_SIZE;
 import static com.ygames.ysoccer.match.PlayerFsm.Id.STATE_IDLE;
 import static com.ygames.ysoccer.match.PlayerFsm.Id.STATE_NOT_RESPONSIVE;
-import static com.ygames.ysoccer.match.PlayerFsm.Id.STATE_OUTSIDE;
 import static com.ygames.ysoccer.match.PlayerFsm.Id.STATE_REACH_TARGET;
 import static com.ygames.ysoccer.match.PlayerFsm.Id.STATE_STAND_RUN;
 
@@ -130,6 +130,10 @@ public class Player implements Json.Serializable {
     int frameDistanceL;
     int frameDistance;
     int frameDistanceR;
+
+    public int yellows;
+    public int suspensions;
+    public boolean isCautioned;
 
     public Player() {
         skills = new Skills();
@@ -1123,5 +1127,18 @@ public class Player implements Json.Serializable {
 
     String numberName() {
         return number + "_" + shirtName + " (" + fsm.getState().getClass().getSimpleName() + ", " + (inputDevice == ai ? ai.fsm.state.getClass().getSimpleName() : "Controlled") + ")";
+    }
+
+    public void getSanctionsFromCompetition(Competition competition) {
+        Competition.PlayerSanctions playerSanctions = competition.searchPlayerSanctions(this);
+        if (playerSanctions != null) {
+            suspensions = playerSanctions.suspensions;
+            yellows = playerSanctions.yellows;
+            isCautioned = competition.isPlayerCautioned(this);
+        } else {
+            yellows = 0;
+            suspensions = 0;
+            isCautioned = false;
+        }
     }
 }
