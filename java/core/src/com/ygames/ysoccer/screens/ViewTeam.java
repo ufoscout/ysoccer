@@ -25,12 +25,20 @@ class ViewTeam extends GLScreen {
         font10yellow = new Font(10, 13, 17, 12,16, new RgbPair(0xFCFCFC, 0xFCFC00));
         font10yellow.load();
 
+        // set sanctions
+        for (Player player : team.players) {
+            player.getSanctionsFromCompetition(competition);
+        }
+
         Widget w;
 
         // players
         int x = 0;
         for (int p = 0; p < Const.FULL_TEAM; p++) {
             Player player = team.playerAtPosition(p);
+
+            w = new PlayerSanctions(p, player);
+            widgets.add(w);
 
             w = new PlayerNumberLabel(p, player);
             widgets.add(w);
@@ -76,6 +84,29 @@ class ViewTeam extends GLScreen {
         widgets.add(w);
 
         setSelectedWidget(w);
+    }
+
+    private class PlayerSanctions extends Button {
+
+        PlayerSanctions(int p, Player player) {
+            setGeometry(34, 126 + 22 * p, 20, 20);
+            setAddShadow(true);
+            setActive(false);
+
+            textureRegion = null;
+            if (player != null) {
+                if (player.suspensions == 2) {
+                    textureRegion = gui.penaltyCards[2];
+                    setImagePosition(0, 1);
+                } else if (player.suspensions == 1) {
+                    textureRegion = gui.penaltyCards[1];
+                    setImagePosition(2, 1);
+                } else if (player.isCautioned) {
+                    textureRegion = gui.penaltyCards[0];
+                    setImagePosition(2, 1);
+                }
+            }
+        }
     }
 
     private class PlayerNumberLabel extends Label {
